@@ -1,0 +1,123 @@
+{% extends 'admin/base_site.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-6">Dashboard Paiements</h1>
+    
+    <!-- Filtres -->
+    <div class="bg-white p-4 rounded-lg shadow mb-6">
+        <form method="GET" class="flex flex-wrap gap-4">
+            <select name="status" class="border rounded p-2">
+                <option value="">Tous les statuts</option>
+                {% for value, label in status_choices %}
+                <option value="{{ value }}" {% if status_filter == value %}selected{% endif %}>
+                    {{ label }}
+                </option>
+                {% endfor %}
+            </select>
+            
+            <select name="operator" class="border rounded p-2">
+                <option value="">Tous les opérateurs</option>
+                {% for value, label in operator_choices %}
+                <option value="{{ value }}" {% if operator_filter == value %}selected{% endif %}>
+                    {{ label }}
+                </option>
+                {% endfor %}
+            </select>
+            
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Filtrer
+            </button>
+            
+            <a href="{% url 'admin_payments_dashboard' %}" class="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-100">
+                Réinitialiser
+            </a>
+        </form>
+    </div>
+    
+    <!-- Statistiques -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+        <div class="bg-white p-4 rounded-lg shadow">
+            <div class="text-2xl font-bold text-gray-800">{{ stats.total }}</div>
+            <div class="text-gray-600">Total</div>
+        </div>
+        
+        <div class="bg-yellow-50 p-4 rounded-lg shadow">
+            <div class="text-2xl font-bold text-yellow-600">{{ stats.pending }}</div>
+            <div class="text-gray-600">En attente</div>
+        </div>
+        
+        <div class="bg-green-50 p-4 rounded-lg shadow">
+            <div class="text-2xl font-bold text-green-600">{{ stats.confirmed }}</div>
+            <div class="text-gray-600">Confirmés</div>
+        </div>
+        
+        <div class="bg-red-50 p-4 rounded-lg shadow">
+            <div class="text-2xl font-bold text-red-600">{{ stats.rejected }}</div>
+            <div class="text-gray-600">Rejetés</div>
+        </div>
+        
+        <div class="bg-blue-50 p-4 rounded-lg shadow">
+            <div class="text-2xl font-bold text-blue-600">{{ stats.total_amount }} FCFA</div>
+            <div class="text-gray-600">Montant total</div>
+        </div>
+    </div>
+    
+    <!-- Tableau -->
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="min-w-full">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="p-3 text-left">ID</th>
+                    <th class="p-3 text-left">Service</th>
+                    <th class="p-3 text-left">Montant</th>
+                    <th class="p-3 text-left">Utilisateur</th>
+                    <th class="p-3 text-left">Statut</th>
+                    <th class="p-3 text-left">Date</th>
+                    <th class="p-3 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paiement in paiements %}
+                <tr class="border-t hover:bg-gray-50">
+                    <td class="p-3 font-mono text-sm">{{ paiement.transaction_id }}</td>
+                    <td class="p-3">{{ paiement.service.nom }}</td>
+                    <td class="p-3 font-bold">{{ paiement.montant }} FCFA</td>
+                    <td class="p-3">
+                        <div>{{ paiement.user_name }}</div>
+                        <div class="text-sm text-gray-600">{{ paiement.user_phone }}</div>
+                    </td>
+                    <td class="p-3">
+                        <span class="px-2 py-1 rounded text-white 
+                            {% if paiement.status == 'confirmed' %}bg-green-600
+                            {% elif paiement.status == 'pending' %}bg-yellow-600
+                            {% elif paiement.status == 'rejected' %}bg-red-600
+                            {% else %}bg-gray-600{% endif %}">
+                            {{ paiement.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="p-3">{{ paiement.created_at|date:"d/m/Y H:i" }}</td>
+                    <td class="p-3">
+                        {% if paiement.status == 'pending' %}
+                        <form method="POST" action="{% url 'admin_confirm_payment' paiement.transaction_id %}" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="text-blue-600 hover:text-blue-800 text-sm">
+                                Confirmer
+                            </button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="p-3 text-center text-gray-500">
+                        Aucun paiement trouvé
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

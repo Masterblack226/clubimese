@@ -1,0 +1,686 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Club IMESE - L'excellence par la collaboration | Université Thomas Sankara</title>
+    <meta name="description" content="Club IMESE - Plateforme académique pour l'excellence en Statistiques et Économie à l'Université Thomas Sankara, Burkina Faso" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fclubimese2224back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background">
+    <!-- Navigation Header -->
+    <nav class="bg-white shadow-academic sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-1">
+                            <img src="{% static 'images/IMESE.png' %}" alt="Club IMESE Logo" class="w-16 h-20 rounded-full mr-10"/>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-inter font-bold text-primary">Club IMESE</h1>
+                        <p class="text-xs text-gray-500">Université Thomas Sankara</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{% url 'homepage' %}">Accueil</a>
+                        <a href="{% url 'formations_catalog' %}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm transition-academic">Formations</a>
+                        <a href="{% url 'ressources' %}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm transition-academic">Ressources</a>
+                        <a href="{% url 'news_activities' %}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm transition-academic">Actualités</a>
+                        <a href="{% url 'vip_membership' %}" class="text-secondary font-medium px-3 py-2 rounded-md text-sm hover:bg-secondary-50 transition-academic">VIP</a>
+                        
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'membership_portal' %}" class="btn-primary text-sm px-4 py-2">Me connecter</a>
+                        {% else %}
+                            <a href="{% url 'membership_portal' %}" class="btn-primary text-sm px-4 py-2">Mon compte</a>
+                        {% endif %}
+                            
+                        
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-700 hover:text-primary focus:outline-none focus:text-primary" id="mobile-menu-button">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+                <a href="{% url 'homepage' %}" class="text-primary font-medium block px-3 py-2 rounded-md text-base bg-primary-50">Accueil</a>
+                <a href="{% url 'formations_catalog' %}" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base transition-academic">Formations</a>
+                <a href="{% url 'ressources' %}" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base transition-academic">Ressources</a>
+                <a href="{% url 'news_activities' %}" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base transition-academic">Actualités</a>
+                <a href="{% url 'vip_membership' %}" class="text-secondary font-medium block px-3 py-2 rounded-md text-base hover:bg-secondary-50 transition-academic">VIP</a>
+                
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'membership_portal' %}" class="btn-primary block text-center mx-3 mt-4">Se connecter</a>
+                {% else %}
+                    <a href="{% url 'membership_portal' %}" class="btn-primary block text-center mx-3 mt-4">Mon compte</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Dynamic Content -->
+    <section class="relative bg-gradient-to-br from-primary-900 via-primary-800 to-accent-800 text-white overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <defs>
+                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/>
+                    </pattern>
+                </defs>
+                <rect width="100" height="100" fill="url(#grid)"/>
+            </svg>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Hero Content -->
+                <div class="text-center lg:text-left">
+                    <!-- University Partnership Badge -->
+                    <div class="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+                        <img src="{% static 'images/UTS.jpg' %}" alt="Thomas Sankara University" class="w-6 h-6 rounded-full mr-2" onerror="this.src='Image/UTS.jpg'; this.onerror=null;" />
+                        <span class="text-sm font-medium">Partenaire Officiel - Université Thomas Sankara</span>
+                    </div>
+
+                    <h1 class="text-4xl lg:text-6xl font-inter font-bold mb-6 leading-tight">
+                        L'excellence par la
+                        <span class="text-gradient-primary bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+                            collaboration
+                        </span>
+                    </h1>
+
+                    <p class="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed">
+                        Avancez votre éducation en Statistiques et Économie au cœur du Burkina Faso. 
+                        Rejoignez une communauté d'excellence académique et de croissance collaborative.
+                    </p>
+
+                    <!-- Statistics -->
+                <div class="grid grid-cols-3 gap-4 mb-8 max-w-md mx-auto">
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-green-400" id="member-count">{{ member_count }}</div>
+                        <div class="text-sm text-blue-200">Membres Actifs</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-purple-400" id="formations-count">{{ formations_count }}</div>
+                        <div class="text-sm text-blue-200">Formations</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-green-400" id="success-rate">{{ success_rate }}%</div>
+                        <div class="text-sm text-blue-200">Taux de Réussite</div>
+                    </div>
+                </div>
+
+                    <!-- Primary CTAs -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        {% if not user.is_authenticated %}
+                        <a href="{% url 'membership_portal' %}" class="btn-secondary text-lg px-8 py-4 inline-flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                            </svg>
+                            Rejoindre le Club
+                        </a>
+                        {% else %}
+                        <a href="{% url 'membership_portal' %}" class="btn-secondary text-lg px-8 py-4 inline-flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                            </svg>
+                            Mon compte
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'formations_catalog' %}" class="bg-white/10 backdrop-blur-sm text-white border-2 border-white/20 hover:bg-white/20 px-8 py-4 rounded-lg font-inter font-semibold transition-all duration-300 inline-flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                            Découvrir les Formations
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Rotating Testimonials -->
+                <div class="relative">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                        <div class="testimonial-container" id="testimonial-container">
+                            <!-- Testimonial 1 -->
+                            <div class="testimonial active">
+                                <div class="flex items-center mb-4">
+                                    <img src="{{ testimonial1_image_url }}" alt="{{ testimonial1_name }}" class="w-12 h-12 rounded-full mr-4" onerror="this.src='https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=150'; this.onerror=null;" />
+                                    <div>
+                                        <h4 class="font-semibold">{{ testimonial1_name }}</h4>
+                                        <p class="text-sm text-blue-200">{{ testimonial1_role }}</p>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <span class="bg-secondary text-white text-xs px-2 py-1 rounded-full">VIP</span>
+                                    </div>
+                                </div>
+                                <p class="text-blue-100 italic">
+                                    "Les corrections exclusives VIP m'ont permis d'améliorer mes notes de 40%. 
+                                    L'investissement en vaut vraiment la peine pour tout étudiant sérieux."
+                                </p>
+                            </div>
+
+                            <!-- Testimonial 2 -->
+                            <div class="testimonial">
+                                <div class="flex items-center mb-4">
+                                    <img src="https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg" alt="Fatou Ouédraogo" class="w-12 h-12 rounded-full mr-4" onerror="this.src='https://images.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg?auto=compress&cs=tinysrgb&w=150'; this.onerror=null;" />
+                                    <div>
+                                        <h4 class="font-semibold">{{ testimonial2_name }}</h4>
+                                        <p class="text-sm text-blue-200">{{ testimonial2_role }}</p>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <span class="bg-secondary text-white text-xs px-2 py-1 rounded-full">VIP</span>
+                                    </div>
+                                </div>
+                                <p class="text-blue-100 italic">
+                                    "La communauté VIP offre un soutien exceptionnel. Les ressources avancées 
+                                    m'ont aidée à décrocher un stage à la Banque Centrale."
+                                </p>
+                            </div>
+
+                            <!-- Testimonial 3 -->
+                            <div class="testimonial">
+                                <div class="flex items-center mb-4">
+                                    <img src="{{ testimonial3_image_url }}" alt="{{ testimonial3_name }}" class="w-12 h-12 rounded-full mr-4" onerror="this.src='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150'; this.onerror=null;" />
+                                    <div>
+                                        <h4 class="font-semibold">{{ testimonial3_name }}</h4>
+                                        <p class="text-sm text-blue-200">{{ testimonial3_role }}</p>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <span class="bg-secondary text-white text-xs px-2 py-1 rounded-full">VIP</span>
+                                    </div>
+                                </div>
+                                <p class="text-blue-100 italic">
+                                    "Grâce aux formations avancées du Club IMESE, j'ai pu publier mon premier 
+                                    article de recherche en économétrie appliquée."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial Navigation Dots -->
+                        <div class="flex justify-center mt-6 space-x-2">
+                            <button class="w-2 h-2 rounded-full bg-white/50 testimonial-dot active" data-testimonial="0"></button>
+                            <button class="w-2 h-2 rounded-full bg-white/30 testimonial-dot" data-testimonial="1"></button>
+                            <button class="w-2 h-2 rounded-full bg-white/30 testimonial-dot" data-testimonial="2"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three-Column Grid Section -->
+    <section class="py-16 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-inter font-bold text-primary mb-4">
+                    Découvrez Notre Écosystème Académique
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Formations expertes, événements enrichissants et succès partagés au service de votre excellence académique
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Upcoming Formations -->
+                <div class="card hover:shadow-academic-lg transition-academic">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-primary-100 p-3 rounded-lg mr-4">
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-inter font-semibold text-primary">Formations à Venir</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        {% for formation in dernieres_formations %}
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-gray-800">{{ formation.titre }}</h4>
+                            <p class="text-sm text-gray-600 mb-2">{{ formation.formateur.nom }} - {{ formation.date_debut|date:"d F Y" }}</p>
+                            <div class="flex items-center text-xs text-accent">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                {{ formation.get_niveau_display }}
+                                Certification incluse
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-gray-800">{{ formation.titre }}</h4>
+                            <p class="text-sm text-gray-600 mb-2">{{ formation.formateur.nom }} - {{ formation.date_debut|date:"d F Y" }}</p>
+                            <div class="flex items-center text-xs text-secondary">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                                </svg>
+                                Places limitées
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-primary pl-4">
+                            <h4 class="font-semibold text-gray-800">{{ formation.titre }}</h4>
+                            <p class="text-sm text-gray-600 mb-2">{{ formation.formateur.nom }} - {{ formation.date_debut|date:"d F Y" }}</p>
+                            <div class="flex items-center text-xs text-primary">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                </svg>
+                                Inscription ouverte
+                            </div>
+                        </div>
+                    </div>
+                        {% empty %}
+                        <p class="text-gray-600">Aucune formation à venir pour le moment. Revenez bientôt !</p>
+                        {% endfor %}
+
+                    <div class="mt-6">
+                        <a href="{% url 'formations_catalog' %}" class="text-primary font-medium hover:text-primary-700 transition-academic inline-flex items-center">
+                            Voir toutes les formations
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Past Event Highlights -->
+                <div class="card hover:shadow-academic-lg transition-academic">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-accent-100 p-3 rounded-lg mr-4">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-inter font-semibold text-primary">{{ past_events_title }}</h3>
+                        <p class="text-xs opacity-90">{{ past_events_date }} - {{ past_events_participants }} participants</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="relative">
+                            <img src="{{ past_event1_image_url }}" alt="Conférence Économie Numérique" class="w-full h-32 object-cover rounded-lg" onerror="this.src='https://images.pexels.com/photos/1181533/pexels-photo-1181533.jpeg?auto=compress&cs=tinysrgb&w=400'; this.onerror=null;" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
+                            <div class="absolute bottom-3 left-3 text-white">
+                                <h4 class="font-semibold text-sm">{{ past_event1_title }}</h4>
+                                <p class="text-xs opacity-90">{{ past_event1_date }} - {{ past_event1_participants }} participants</p>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <img src="{{ past_event2_image_url }}" alt="Workshop Analyse de Données" class="w-full h-32 object-cover rounded-lg" onerror="this.src='https://images.pixabay.com/photo/2016/02/19/11/19/office-1209640_1280.jpg?auto=compress&cs=tinysrgb&w=400'; this.onerror=null;" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
+                            <div class="absolute bottom-3 left-3 text-white">
+                                <h4 class="font-semibold text-sm">{{ past_event2_title }}</h4>
+                                <p class="text-xs opacity-90">{{ past_event2_date }} - {{ past_event2_participants }} participants</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <a href="{% url 'news_activities' %}" class="text-accent font-medium hover:text-accent-700 transition-academic inline-flex items-center">
+                            Voir toutes les activités
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIP Benefits Preview Section -->
+    <section class="py-16 bg-gradient-to-br from-secondary-50 to-accent-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center bg-secondary text-white px-4 py-2 rounded-full mb-4">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732L14.146 12.8l-1.179 4.456a1 1 0 01-1.934 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732L9.854 7.2l1.179-4.456A1 1 0 0112 2z" clip-rule="evenodd"/>
+                    </svg>
+                    Accès VIP Exclusif
+                </div>
+                <h2 class="text-3xl lg:text-4xl font-inter font-bold text-primary mb-4">
+                    Débloquez Votre Potentiel Académique
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Accédez aux corrections exclusives, ressources avancées et communauté premium pour maximiser votre réussite
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+                <!-- Assignment Corrections -->
+                <div class="bg-white rounded-xl p-6 shadow-academic-lg hover:shadow-academic-xl transition-academic border-2 border-transparent hover:border-secondary/20">
+                    <div class="bg-secondary-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-inter font-semibold text-primary mb-3">Corrections Détaillées</h3>
+                    <p class="text-gray-600 mb-4">
+                        Accès exclusif aux corrections complètes de tous les devoirs avec explications détaillées et conseils personnalisés.
+                    </p>
+                    <div class="bg-secondary-50 p-3 rounded-lg">
+                        <p class="text-sm text-secondary font-medium">✓ Corrections pas-à-pas</p>
+                        <p class="text-sm text-secondary font-medium">✓ Commentaires personnalisés</p>
+                        <p class="text-sm text-secondary font-medium">✓ Conseils d'amélioration</p>
+                    </div>
+                </div>
+
+                <!-- Advanced Resources -->
+                <div class="bg-white rounded-xl p-6 shadow-academic-lg hover:shadow-academic-xl transition-academic border-2 border-transparent hover:border-accent/20">
+                    <div class="bg-accent-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-inter font-semibold text-primary mb-3">Ressources Avancées</h3>
+                    <p class="text-gray-600 mb-4">
+                        Bibliothèque exclusive de documents, études de cas réels et outils statistiques professionnels.
+                    </p>
+                    <div class="bg-accent-50 p-3 rounded-lg">
+                        <p class="text-sm text-accent font-medium">✓ Études de cas exclusives</p>
+                        <p class="text-sm text-accent font-medium">✓ Outils statistiques avancés</p>
+                        <p class="text-sm text-accent font-medium">✓ Bases de données premium</p>
+                    </div>
+                </div>
+
+                <!-- Premium Community -->
+                <div class="bg-white rounded-xl p-6 shadow-academic-lg hover:shadow-academic-xl transition-academic border-2 border-transparent hover:border-primary/20">
+                    <div class="bg-primary-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-inter font-semibold text-primary mb-3">Communauté Premium</h3>
+                    <p class="text-gray-600 mb-4">
+                        Rejoignez un réseau exclusif d'étudiants d'élite et bénéficiez du mentorat de nos meilleurs diplômés.
+                    </p>
+                    <div class="bg-primary-50 p-3 rounded-lg">
+                        <p class="text-sm text-primary font-medium">✓ Forum privé VIP</p>
+                        <p class="text-sm text-primary font-medium">✓ Sessions de mentorat</p>
+                        <p class="text-sm text-primary font-medium">✓ Networking exclusif</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Money Payment Options -->
+            <div class="bg-white rounded-xl p-8 shadow-academic-lg">
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-inter font-semibold text-primary mb-2">Abonnement VIP - 3,000 FCFA/an</h3>
+                    <p class="text-gray-600">Paiement sécurisé avec Mobile Money</p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
+                    <!-- Orange Money -->
+                    <div class="flex items-center bg-orange-50 px-6 py-3 rounded-lg border border-orange-200">
+                        <div class="w-8 h-8 bg-orange-500 rounded mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">O</span>
+                        </div>
+                        <span class="font-medium text-orange-700">Orange Money</span>
+                    </div>
+
+                    <!-- Moov Money -->
+                    <div class="flex items-center bg-blue-50 px-6 py-3 rounded-lg border border-blue-200">
+                        <div class="w-8 h-8 bg-blue-600 rounded mr-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">M</span>
+                        </div>
+                        <span class="font-medium text-blue-700">Moov Money</span>
+                    </div>
+                    
+                </div>
+
+                <div class="text-center">
+                    <a href="{% url 'vip_membership' %}" class="btn-secondary text-lg px-8 py-4 inline-flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732L14.146 12.8l-1.179 4.456a1 1 0 01-1.934 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732L9.854 7.2l1.179-4.456A1 1 0 0112 2z" clip-rule="evenodd"/>
+                        </svg>
+                        Découvrir les Avantages VIP
+                    </a>
+                    <p class="text-sm text-gray-500 mt-3">Annulation possible à tout moment • Garantie satisfaction 30 jours</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Ticker Section -->
+    <section class="bg-primary text-white py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center">
+                <div class="bg-secondary px-3 py-1 rounded-full mr-4 flex-shrink-0">
+                    <span class="text-sm font-semibold">ACTUALITÉS</span>
+                </div>
+                <div class="overflow-hidden flex-1">
+                    <div class="news-ticker flex items-center space-x-8" id="news-ticker">
+                        <span class="whitespace-nowrap">📚 Nouvelle formation "Machine Learning pour Économistes" - Inscription ouverte</span>
+                        <span class="whitespace-nowrap">🎉 Félicitations à nos 15 nouveaux diplômés certifiés en Économétrie Avancée</span>
+                        <span class="whitespace-nowrap">💡 Partenariat exclusif avec la Banque Centrale des États de l'Afrique de l'Ouest</span>
+                        <span class="whitespace-nowrap">🏆 Club IMESE remporte le Prix d'Excellence Académique 2024</span>
+                        <span class="whitespace-nowrap">📊 Nouveau laboratoire de données économiques disponible pour les membres VIP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-4 gap-8">
+                <!-- Club Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-1">
+                            <img src="{% static 'images/IMESE.png' %}" alt="Club IMESE Logo" class="w-10 h-20 rounded-full mr-10"/>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-inter font-bold">Club IMESE</h3>
+                            <p class="text-sm text-gray-400">Université Thomas Sankara</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 max-w-md">
+                        L'excellence par la collaboration - Votre partenaire pour l'excellence académique en Statistiques et Économie au Burkina Faso.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://web.facebook.com/Lejeunestatisticien" class="text-gray-400 hover:text-secondary transition-academic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.tiktok.com/@club_imese?is_from_webapp=1&sender_device=pc" class="text-gray-400 hover:text-secondary transition-academic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"/>
+                            </svg>
+                        </a>
+                        <a href="javascript:void(0)" class="text-gray-400 hover:text-secondary transition-academic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-inter font-semibold mb-4">Liens Rapides</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'formations_catalog' %}" class="text-gray-300 hover:text-secondary transition-academic">Formations</a></li>
+                        <li><a href="{% url 'ressources' %}" class="text-gray-300 hover:text-secondary transition-academic">Ressources</a></li>
+                        {% if not user.is_authenticated %}
+                        <li><a href="{% url 'membership_portal' %}" class="text-gray-300 hover:text-secondary transition-academic">Inscription</a></li>
+                        {% else %}
+                        <li><a href="{% url 'membership_portal' %}" class="text-gray-300 hover:text-secondary transition-academic">Mon Compte</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'vip_membership' %}" class="text-gray-300 hover:text-secondary transition-academic">Avantages VIP</a></li>
+                        <li><a href="{% url 'news_activities' %}" class="text-gray-300 hover:text-secondary transition-academic">Actualités</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-inter font-semibold mb-4">Contact</h4>
+                    <div class="space-y-2 text-gray-300">
+                        <p class="flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            Université Thomas Sankara, Ouagadougou
+                        </p>
+                        <p class="flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            contact@clubimese.bf
+                        </p>
+                        <p class="flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                            +226 72 68 95 58
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 Club IMESE - Université Thomas Sankara. Tous droits réservés.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Testimonial rotation
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        const testimonialDots = document.querySelectorAll('.testimonial-dot');
+
+        function showTestimonial(index) {
+            testimonials.forEach((testimonial, i) => {
+                testimonial.classList.toggle('active', i === index);
+                testimonial.style.display = i === index ? 'block' : 'none';
+            });
+            
+            testimonialDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+                dot.classList.toggle('bg-white/50', i === index);
+                dot.classList.toggle('bg-white/30', i !== index);
+            });
+        }
+
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }
+
+        // Initialize testimonials
+        showTestimonial(0);
+
+        // Auto-rotate testimonials
+        setInterval(nextTestimonial, 5000);
+
+        // Manual testimonial navigation
+        testimonialDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentTestimonial = index;
+                showTestimonial(currentTestimonial);
+            });
+        });
+
+        // Animated counters
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            function updateCounter() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target;
+                }
+            }
+            
+            updateCounter();
+        }
+
+        // Trigger counter animations when in view
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const memberCount = document.getElementById('member-count');
+                    const formationsCount = document.getElementById('formations-count');
+                    const successRate = document.getElementById('success-rate');
+                    
+                    animateCounter(member_count);
+                    animateCounter(formations_count);
+                    animateCounter(success_rate);
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        observer.observe(document.querySelector('.grid.grid-cols-3'));
+
+        // News ticker animation
+        const newsTicker = document.getElementById('news-ticker');
+        let tickerPosition = 0;
+
+        function animateNewsTicker() {
+            tickerPosition -= 1;
+            if (tickerPosition <= -newsTicker.scrollWidth / 1) {
+                tickerPosition = 0;
+            }
+            newsTicker.style.transform = `translateX(${tickerPosition}px)`;
+            requestAnimationFrame(animateNewsTicker);
+        }
+
+        // Start news ticker animation
+        animateNewsTicker();
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

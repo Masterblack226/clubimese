@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation Paiement - Club IMESE</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <style>
+        .confirmation-card {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .success {
+            background: linear-gradient(135deg, #d1fae5, #ecfdf5);
+            border: 2px solid #10b981;
+        }
+        .error {
+            background: linear-gradient(135deg, #fee2e2, #fef2f2);
+            border: 2px solid #ef4444;
+        }
+        .icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .success .icon {
+            background-color: #10b981;
+            color: white;
+        }
+        .error .icon {
+            background-color: #ef4444;
+            color: white;
+        }
+        .details {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="confirmation-card {% if success %}success{% else %}error{% endif %}">
+        <div class="icon">
+            {% if success %}
+                <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+            {% else %}
+                <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            {% endif %}
+        </div>
+        
+        <h1 class="text-2xl font-bold mb-2">
+            {% if success %}
+                ✅ Paiement Confirmé !
+            {% else %}
+                ❌ Paiement Non Confirmé
+            {% endif %}
+        </h1>
+        
+        <p class="text-gray-600 mb-6">
+            {% if success %}
+                Félicitations ! Votre paiement a été validé avec succès.
+            {% else %}
+                Votre paiement n'a pas pu être confirmé.
+            {% endif %}
+        </p>
+        
+        {% if paiement %}
+        <div class="details">
+            <div class="detail-item">
+                <span class="font-medium">ID Transaction:</span>
+                <span class="font-mono">{{ paiement.transaction_id }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="font-medium">Formation:</span>
+                <span>{{ paiement.formation_nom }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="font-medium">Montant:</span>
+                <span class="font-bold">{{ paiement.montant }} FCFA</span>
+            </div>
+            <div class="detail-item">
+                <span class="font-medium">Statut:</span>
+                <span class="font-semibold {% if success %}text-green-600{% else %}text-red-600{% endif %}">
+                    {{ paiement.get_status_display }}
+                </span>
+            </div>
+            {% if paiement.confirmed_at %}
+            <div class="detail-item">
+                <span class="font-medium">Confirmé le:</span>
+                <span>{{ paiement.confirmed_at|date:"d/m/Y H:i" }}</span>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <div class="mt-8 space-y-3">
+            {% if success %}
+                <a href="{% url 'formations_catalog' %}" 
+                   class="block w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                    Accéder à la formation
+                </a>
+            {% else %}
+                <a href="{% url 'paiement' %}?formation=statistiques" 
+                   class="block w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition">
+                    Réessayer le paiement
+                </a>
+            {% endif %}
+            
+            <a href="{% url 'formations_catalog' %}" 
+               class="block w-full bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition">
+                Retour aux formations
+            </a>
+        </div>
+    </div>
+</body>
+</html>

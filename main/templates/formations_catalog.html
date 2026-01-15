@@ -1,0 +1,654 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catalogue des Formations - Club IMESE | Université Thomas Sankara</title>
+    <meta name="description" content="Découvrez nos formations expertes en Statistiques et Économie. Ateliers avancés, instructeurs qualifiés et certifications reconnues à l'Université Thomas Sankara." />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body class="bg-background">
+    <!-- Navigation Header -->
+    <nav class="bg-white shadow-academic sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="flex-shrink-1">
+                            <img src="{% static 'images/IMESE.png' %}" alt="Club IMESE Logo" class="w-16 h-20 rounded-full mr-10"/>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-inter font-bold text-primary">Club IMESE</h1>
+                        <p class="text-xs text-gray-500">Université Thomas Sankara</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{% url 'homepage' %}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm transition-academic">Accueil</a>
+                        <a href="{% url 'formations_catalog' %}" class="bg-primary-50 text-primary px-3 py-2 rounded-md text-sm font-medium">Formations</a>
+                        <a href="{% url 'ressources' %}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm transition-academic">Ressources</a>
+                        <a href="{% url 'news_activities' %}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm transition-academic">Actualités</a>
+                        <a href="{% url 'vip_membership' %}" class="text-secondary font-medium px-3 py-2 rounded-md text-sm hover:bg-secondary-50 transition-academic">VIP</a>
+                        
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'membership_portal' %}" class="btn-primary text-sm px-4 py-2">Se connecter</a>
+                        {% else %}
+                            <a href="{% url 'membership_portal' %}" class="btn-primary text-sm px-4 py-2">Mon compte</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-700 hover:text-primary focus:outline-none focus:text-primary" id="mobile-menu-button">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+                <a href="{% url 'homepage' %}" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base">Accueil</a>
+                <a href="{% url 'formations_catalog' %}" class="bg-primary-50 text-primary block px-3 py-2 rounded-md text-base font-medium">Formations</a>
+                <a href="{% url 'ressources' %}" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base">Ressources</a>
+                <a href="{% url 'news_activities' %}" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base">Actualités</a>
+                <a href="{% url 'vip_membership' %}" class="text-secondary block px-3 py-2 rounded-md text-base hover:bg-secondary-50">VIP</a>
+                
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'membership_portal' %}" class="btn-primary block text-center mx-3 mt-4 py-2">Se connecter</a>
+                {% else %}
+                    <a href="{% url 'membership_portal' %}" class="btn-primary block text-center mx-3 mt-4 py-2">Mon compte</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary-900 via-primary-800 to-accent-800 text-white overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <defs>
+                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/>
+                    </pattern>
+                </defs>
+                <rect width="100" height="100" fill="url(#grid)"/>
+            </svg>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+            <div class="text-center">
+                <div class="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+                    <img src="{% static 'images/UTS.jpg' %}" alt="Université Thomas Sankara" class="h-6 w-8 rounded-full">
+                    <span class="text-sm font-medium">Formations Certifiées - Université Thomas Sankara</span>
+                </div>
+
+                <h1 class="text-4xl lg:text-6xl font-inter font-bold mb-6 leading-tight">
+                    Catalogue des
+                    <span class="text-gradient-primary bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+                        Formations
+                    </span>
+                </h1>
+
+                <p class="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed max-w-4xl mx-auto">
+                    Développez votre expertise en Statistiques et Économie avec nos formations dirigées par des experts reconnus. 
+                    Certifications officielles et applications pratiques au contexte burkinabé.
+                </p>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-8">
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-secondary">{{ formations.count }}</div>
+                        <div class="text-sm text-blue-200">Formations Disponibles</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-accent">{{ stats.total_formateurs }}</div>
+                        <div class="text-sm text-blue-200">Instructeurs Experts</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-secondary">{{ stats.taux_satisfaction }}%</div>
+                        <div class="text-sm text-blue-200">Taux de Satisfaction</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#upcoming-formations" class="btn-secondary text-lg px-8 py-4 inline-flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        Formations à Venir
+                    </a>
+                    <a href="#past-formations" class="bg-white/10 backdrop-blur-sm text-white border-2 border-white/20 hover:bg-white/20 px-8 py-4 rounded-lg font-inter font-semibold transition-all duration-300 inline-flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                        Archives & Ressources
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="py-8 bg-surface border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-6 items-center">
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-md">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Rechercher une formation..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-300 focus:border-primary-500 focus:outline-none transition-all duration-300" id="search-input" />
+                    </div>
+                </div>
+
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap gap-3">
+                    <button class="filter-btn active" data-filter="all">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                        Toutes
+                    </button>
+                    <button class="filter-btn" data-filter="statistics">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        Statistiques
+                    </button>
+                    <button class="filter-btn" data-filter="economics">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Économie
+                    </button>
+                    <button class="filter-btn" data-filter="data-analysis">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Analyse de Données
+                    </button>
+                    <button class="filter-btn" data-filter="online">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        En Ligne
+                    </button>
+                </div>
+
+                <!-- Reset Filter -->
+                <button class="text-gray-500 hover:text-primary transition-academic" id="reset-filters">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Formations Section -->
+    <section class="py-16 bg-white" id="upcoming-formations">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-inter font-bold text-primary mb-4">
+                    Formations à Venir
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Inscrivez-vous dès maintenant aux prochaines formations et bénéficiez de tarifs préférentiels
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8" id="formations-grid">
+                <!-- Les formations seront chargées par AJAX -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Formation Detail Modal -->
+    <div id="formationModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[200] hidden" style="display: none;">
+        <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto z-[201]">
+            <!-- Close button -->
+            <div class="sticky top-0 bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center">
+                <h2 id="modal-title" class="text-2xl font-bold text-primary"></h2>
+                <button onclick="closeFormationModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-8">
+                <!-- Formation Image -->
+                <img id="modal-image" src="" alt="" class="w-full h-64 object-cover rounded-xl mb-6">
+
+                <!-- Formation Info Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <p class="text-xs text-gray-600 mb-1">Niveau</p>
+                        <p id="modal-level" class="font-bold text-primary"></p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <p class="text-xs text-gray-600 mb-1">Durée</p>
+                        <p id="modal-duration" class="font-bold text-primary"></p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <p class="text-xs text-gray-600 mb-1">Prix</p>
+                        <p id="modal-price" class="font-bold text-secondary"></p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <p class="text-xs text-gray-600 mb-1">Début</p>
+                        <p id="modal-start-date" class="font-bold text-primary text-sm"></p>
+                    </div>
+                </div>
+
+                <!-- Formateur Info -->
+                <div class="bg-gray-50 p-4 rounded-lg mb-6 flex items-center gap-4">
+                    <img id="modal-trainer-photo" src="" alt="" class="w-16 h-16 rounded-full object-cover">
+                    <div>
+                        <h3 id="modal-trainer-name" class="font-bold text-gray-800"></h3>
+                        <p id="modal-trainer-specialty" class="text-sm text-gray-600 mb-2"></p>
+                    </div>
+                </div>
+
+                <!-- Formateur Bio -->
+                <div class="mb-6">
+                    <h3 class="font-bold text-lg text-gray-800 mb-2">À propos du formateur</h3>
+                    <p id="modal-trainer-bio" class="text-gray-600 leading-relaxed"></p>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-6">
+                    <h3 class="font-bold text-lg text-gray-800 mb-2">Description</h3>
+                    <p id="modal-description" class="text-gray-600 leading-relaxed"></p>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex gap-3 pt-6 border-t border-gray-200">
+                    <a id="modal-register-btn" href="#" class="flex-1 btn-primary text-center py-3">
+                        S'inscrire Maintenant
+                    </a>
+                    <button onclick="closeFormationModal()" class="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-academic font-medium">
+                        Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-4 gap-8">
+                <!-- Club Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-1">
+                            <img src="{% static 'images/IMESE.png' %}" alt="Club IMESE Logo" class="w-10 h-20 rounded-full mr-10"/>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-inter font-bold">Club IMESE</h3>
+                            <p class="text-sm text-gray-400">Université Thomas Sankara</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 max-w-md">
+                        L'excellence par la collaboration - Votre partenaire pour l'excellence académique en Statistiques et Économie au Burkina Faso.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://web.facebook.com/Lejeunestatisticien" class="text-gray-400 hover:text-secondary transition-academic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.tiktok.com/@club_imese?is_from_webapp=1&sender_device=pc" class="text-gray-400 hover:text-secondary transition-academic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"/>
+                            </svg>
+                        </a>
+                        <a href="javascript:void(0)" class="text-gray-400 hover:text-secondary transition-academic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-inter font-semibold mb-4">Liens Rapides</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'formations_catalog' %}" class="text-gray-300 hover:text-secondary transition-academic">Formations</a></li>
+                        <li><a href="{% url 'ressources' %}" class="text-gray-300 hover:text-secondary transition-academic">Ressources</a></li>
+                        {% if not user.is_authenticated %}
+                        <li><a href="{% url 'membership_portal' %}" class="text-gray-300 hover:text-secondary transition-academic">Inscription</a></li>
+                        {% else %}
+                        <li><a href="{% url 'membership_portal' %}" class="text-gray-300 hover:text-secondary transition-academic">Mon Compte</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'vip_membership' %}" class="text-gray-300 hover:text-secondary transition-academic">Avantages VIP</a></li>
+                        <li><a href="{% url 'news_activities' %}" class="text-gray-300 hover:text-secondary transition-academic">Actualités</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-inter font-semibold mb-4">Contact</h4>
+                    <div class="space-y-2 text-gray-300">
+                        <p>Université Thomas Sankara, Ouagadougou</p>
+                        <p>contact@clubimese.bf</p>
+                        <p>+226 70 12 34 56</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 Club IMESE - Université Thomas Sankara. Tous droits réservés.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', function() {
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenu) {
+                    mobileMenu.classList.toggle('hidden');
+                }
+            });
+        }
+
+        // Variables globales
+        let currentFormationId = null;
+
+        // Charger les formations au démarrage
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                chargerFormationsFiltrees();
+                initializeFilters();
+            }, 100);
+        });
+
+        // Initialiser les événements des filtres
+        function initializeFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const searchInput = document.getElementById('search-input');
+            const resetButton = document.getElementById('reset-filters');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const niveau = this.getAttribute('data-filter');
+                    filtrerParNiveau(niveau, this);
+                });
+            });
+
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    chargerFormationsFiltrees(null, this.value);
+                });
+            }
+
+            if (resetButton) {
+                resetButton.addEventListener('click', function() {
+                    // Réinitialiser tous les filtres
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active', 'bg-primary', 'text-white');
+                        btn.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+                    });
+                    
+                    const allButton = document.querySelector('[data-filter="all"]');
+                    if (allButton) {
+                        allButton.classList.add('active', 'bg-primary', 'text-white');
+                        allButton.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+                    }
+                    
+                    if (searchInput) searchInput.value = '';
+                    chargerFormationsFiltrees();
+                });
+            }
+
+            // Initialiser les styles des boutons
+            filterButtons.forEach(btn => {
+                if (btn.classList.contains('active')) {
+                    btn.classList.add('bg-primary', 'text-white');
+                } else {
+                    btn.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+                }
+            });
+        }
+
+        // Filtrer par niveau
+        function filtrerParNiveau(niveau, buttonElement) {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            // Mettre à jour les styles des boutons
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active', 'bg-primary', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+            });
+            
+            buttonElement.classList.add('active', 'bg-primary', 'text-white');
+            buttonElement.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+            
+            chargerFormationsFiltrees(niveau);
+        }
+
+        // Charger les formations filtrées via AJAX
+        function chargerFormationsFiltrees(niveau = 'all', search = '') {
+            const params = new URLSearchParams();
+            if (niveau && niveau !== 'all') params.append('niveau', niveau);
+            if (search) params.append('search', search);
+
+            fetch(`/formations/filtrer/?${params.toString()}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Erreur réseau');
+                    return response.json();
+                })
+                .then(data => {
+                    afficherFormations(data.formations);
+                    mettreAJourCompteurs(data.compteurs);
+                })
+                .catch(error => console.error('Erreur:', error));
+        }
+
+        // Afficher les formations
+        function afficherFormations(formations) {
+            const grid = document.getElementById('formations-grid');
+            if (!grid) return;
+
+            if (formations.length === 0) {
+                grid.innerHTML = '<div class="col-span-3 text-center py-12"><p class="text-gray-500 text-lg">Aucune formation disponible.</p></div>';
+                return;
+            }
+
+            grid.innerHTML = formations.map(f => `
+                <div class="formation-card bg-white rounded-xl shadow-academic-lg hover:shadow-academic-xl transition-academic border border-gray-200 overflow-hidden">
+                    <div class="relative">
+                        <img src="${f.image_url}" alt="${f.titre}" class="w-full h-48 object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-accent text-white text-xs px-3 py-1 rounded-full font-medium">${f.niveau}</span>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-secondary text-white text-xs px-3 py-1 rounded-full font-medium">${f.prix > 10000 ? 'VIP Exclusif' : 'Ouvert à Tous'}</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="text-xl font-inter font-semibold text-primary cursor-pointer hover:text-secondary flex-1" onclick="loadFormationModal(${f.id})">${f.titre}</h3>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-secondary">${f.prix.toLocaleString('fr-FR')} FCFA</div>
+                                <div class="text-xs text-gray-500">${f.duree}</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center text-sm text-gray-600 mb-4">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <span>${f.date_debut}</span>
+                        </div>
+
+                        <p class="text-gray-600 mb-4 text-sm leading-relaxed">${f.description}</p>
+
+                        <div class="flex items-center mb-4 p-3 bg-gray-50 rounded-lg">
+                            <img src="${f.formateur_photo}" alt="${f.formateur}" class="w-10 h-10 rounded-full mr-3 object-cover">
+                            <div>
+                                <h4 class="font-semibold text-sm text-gray-800">${f.formateur}</h4>
+                                <p class="text-xs text-gray-600">${f.specialite}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <a href="/paiement/?formation=${f.id}" class="flex-1 btn-primary text-sm py-3 text-center">
+                                S'inscrire - ${f.prix.toLocaleString('fr-FR')} FCFA
+                            </a>
+                            <button onclick="loadFormationModal(${f.id})" class="px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-academic">
+                                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Mettre à jour les compteurs de catégories
+        function mettreAJourCompteurs(compteurs) {
+            // Mettre à jour les badges des filtres
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(btn => {
+                const filter = btn.getAttribute('data-filter');
+                let count = compteurs.toutes;
+                
+                if (filter === 'debutant') count = compteurs.debutant;
+                else if (filter === 'intermediaire') count = compteurs.intermediaire;
+                else if (filter === 'avance') count = compteurs.avance;
+                
+                // Ajouter le badge si ce n'est pas 'all'
+                if (filter !== 'all' && count !== undefined) {
+                    const badgeSelector = `.filter-btn[data-filter="${filter}"] .badge`;
+                    let badge = btn.querySelector('.badge');
+                    if (!badge) {
+                        badge = document.createElement('span');
+                        badge.className = 'badge ml-2 bg-accent text-white text-xs px-2 py-1 rounded-full';
+                        btn.appendChild(badge);
+                    }
+                    badge.textContent = count;
+                }
+            });
+        }
+
+        // Charger le modal avec les détails de la formation
+        function loadFormationModal(formationId) {
+            currentFormationId = formationId;
+            fetch(`/formations/${formationId}/detail-json/`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Formation non trouvée');
+                    return response.json();
+                })
+                .then(data => {
+                    // Debug logs
+                    console.log('📋 Données de la formation reçues:', data);
+                    console.log('📌 is_inscribed:', data.is_inscribed);
+                    console.log('📧 user_email:', data.user_email);
+                    console.log('🔍 debug_info:', data.debug_info);
+                    
+                    populateFormationModal(data);
+                    openFormationModal();
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors du chargement des détails de la formation');
+                });
+        }
+
+        // Remplir le modal avec les données
+        function populateFormationModal(data) {
+            document.getElementById('modal-title').textContent = data.titre;
+            document.getElementById('modal-image').src = data.image_url;
+            document.getElementById('modal-level').textContent = data.niveau;
+            document.getElementById('modal-duration').textContent = data.duree;
+            document.getElementById('modal-price').textContent = `${data.prix.toLocaleString('fr-FR')} FCFA`;
+            document.getElementById('modal-start-date').textContent = data.date_debut;
+            document.getElementById('modal-trainer-name').textContent = data.formateur;
+            document.getElementById('modal-trainer-specialty').textContent = data.specialite;
+            document.getElementById('modal-trainer-photo').src = data.formateur_photo;
+            document.getElementById('modal-trainer-bio').textContent = data.bio_formateur;
+            document.getElementById('modal-description').textContent = data.description;
+            
+            const registerBtn = document.getElementById('modal-register-btn');
+            
+            // Vérifier si l'utilisateur est inscrit
+            if (data.is_inscribed) {
+                // L'utilisateur est déjà inscrit
+                registerBtn.onclick = function(e) { e.preventDefault(); return false; };
+                registerBtn.href = '#';
+                registerBtn.textContent = 'Déjà inscrit ✅';
+                registerBtn.style.backgroundColor = '#22c55e'; // Vert
+                registerBtn.style.cursor = 'default';
+                registerBtn.style.opacity = '0.8';
+            } else {
+                // L'utilisateur n'est pas inscrit
+                registerBtn.onclick = null;
+                registerBtn.href = `/paiement/?formation=${data.id}`;
+                registerBtn.textContent = `S'inscrire - ${data.prix.toLocaleString('fr-FR')} FCFA`;
+                registerBtn.style.backgroundColor = ''; // Reset aux styles par défaut
+                registerBtn.style.cursor = 'pointer';
+                registerBtn.style.opacity = '1';
+            }
+        }
+
+        // Ouvrir le modal
+        function openFormationModal() {
+            const modal = document.getElementById('formationModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        // Fermer le modal
+        function closeFormationModal() {
+            const modal = document.getElementById('formationModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        // Fermer le modal avec Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeFormationModal();
+            }
+        });
+
+        // Fermer le modal en cliquant en dehors
+        document.getElementById('formationModal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeFormationModal();
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">Mes Paiements</h1>
+    
+    {% if paiements %}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white p-4 rounded-lg shadow">
+            <div class="text-lg font-semibold text-gray-600">Total dépensé</div>
+            <div class="text-2xl font-bold text-primary">
+                {{ total_amount|default:0 }} FCFA
+            </div>
+        </div>
+        
+        <div class="bg-white p-4 rounded-lg shadow">
+            <div class="text-lg font-semibold text-gray-600">Paiements confirmés</div>
+            <div class="text-2xl font-bold text-green-600">
+                {{ confirmed_count|default:0 }}
+            </div>
+        </div>
+        
+        <div class="bg-white p-4 rounded-lg shadow">
+            <div class="text-lg font-semibold text-gray-600">En attente</div>
+            <div class="text-2xl font-bold text-yellow-600">
+                {{ pending_count|default:0 }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="min-w-full">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="p-3 text-left">ID</th>
+                    <th class="p-3 text-left">Service</th>
+                    <th class="p-3 text-left">Montant</th>
+                    <th class="p-3 text-left">Statut</th>
+                    <th class="p-3 text-left">Date</th>
+                    <th class="p-3 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paiement in paiements %}
+                <tr class="border-t hover:bg-gray-50">
+                    <td class="p-3 font-mono text-sm">{{ paiement.transaction_id }}</td>
+                    <td class="p-3">{{ paiement.service.nom }}</td>
+                    <td class="p-3 font-bold">{{ paiement.montant }} FCFA</td>
+                    <td class="p-3">
+                        <span class="px-2 py-1 rounded text-xs text-white 
+                            {% if paiement.status == 'confirmed' %}bg-green-600
+                            {% elif paiement.status == 'pending' %}bg-yellow-600
+                            {% else %}bg-red-600{% endif %}">
+                            {{ paiement.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="p-3">{{ paiement.created_at|date:"d/m/Y H:i" }}</td>
+                    <td class="p-3">
+                        {% if paiement.status == 'confirmed' %}
+                        <a href="#" class="text-primary hover:underline text-sm">
+                            Accéder
+                        </a>
+                        {% elif paiement.status == 'pending' %}
+                        <span class="text-gray-500 text-sm">En attente...</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-12">
+        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <h3 class="text-lg font-semibold text-gray-600 mb-2">Aucun paiement</h3>
+        <p class="text-gray-500">Vous n'avez effectué aucun paiement pour le moment.</p>
+        <a href="{% url 'formations_catalog' %}" class="mt-4 inline-block btn-primary">
+            Explorer les formations
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

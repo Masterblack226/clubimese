@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}IMESE Club{% endblock %}</title>
+    <!-- Vos CSS ici -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <!-- Votre navigation -->
+            <a href="{% url 'homepage' %}">Accueil</a>
+            <a href="{% url 'formations_catalog' %}">Formations</a>
+            <a href="{% url 'ressources' %}">Ressources</a>
+            <a href="{% url 'news_activities' %}">Actualités</a>
+            <a href="{% url 'vip_membership' %}">VIP</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Votre pied de page -->
+    </footer>
+
+    <!-- Vos JS ici -->
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

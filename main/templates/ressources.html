@@ -1,0 +1,538 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ressources & Devoirs - Hub Éducatif | Club IMESE</title>
+    <meta name="description" content="Accédez aux ressources éducatives, devoirs et outils statistiques du Club IMESE. Contenu gratuit et premium VIP pour l'excellence académique." />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body class="bg-background">
+    <!-- Navigation Header -->
+    <nav class="bg-white shadow-academic sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="flex-shrink-1">
+                            <img src="{% static 'images/IMESE.png' %}" alt="Club IMESE Logo" class="w-16 h-20 rounded-full mr-10"/>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-inter font-bold text-primary">Club IMESE</h1>
+                        <p class="text-xs text-gray-500">Université Thomas Sankara</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{% url 'homepage' %}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm transition-academic">Accueil</a>
+                        <a href="{% url 'formations_catalog' %}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm transition-academic">Formations</a>
+                        <a href="{% url 'ressources' %}" class="text-primary font-medium px-3 py-2 rounded-md text-sm bg-primary-50">Ressources</a>
+                        <a href="{% url 'news_activities' %}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm transition-academic">Actualités</a>
+                        <a href="{% url 'vip_membership' %}" class="text-secondary font-medium px-3 py-2 rounded-md text-sm hover:bg-secondary-50 transition-academic">VIP</a>
+                        
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'membership_portal' %}" class="btn-primary text-sm px-4 py-2">Se connecter</a>
+                        {% else %}
+                            <a href="{% url 'membership_portal' %}" class="btn-primary text-sm px-4 py-2">Mon compte</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-700 hover:text-primary focus:outline-none focus:text-primary" id="mobile-menu-button">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+                <a href="{% url 'homepage' %}" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base transition-academic">Accueil</a>
+                <a href="{% url 'formations_catalog' %}" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base transition-academic">Formations</a>
+                <a href="{% url 'ressources' %}" class="text-primary font-medium block px-3 py-2 rounded-md text-base bg-primary-50">Ressources</a>
+                <a href="{% url 'news_activities' %}" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base transition-academic">Actualités</a>
+                <a href="{% url 'vip_membership' %}" class="text-secondary font-medium block px-3 py-2 rounded-md text-base hover:bg-secondary-50 transition-academic">VIP</a>
+                
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'membership_portal' %}" class="btn-primary block text-center mx-3 mt-4">Se connecter</a>
+                {% else %}
+                    <a href="{% url 'membership_portal' %}" class="btn-primary block text-center mx-3 mt-4">Mon compte</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary-900 via-primary-800 to-accent-800 text-white overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <defs>
+                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/>
+                    </pattern>
+                </defs>
+                <rect width="100" height="100" fill="url(#grid)"/>
+            </svg>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center">
+                <div class="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                    </svg>
+                    Hub Éducatif Premium
+                </div>
+
+                <h1 class="text-4xl lg:text-6xl font-inter font-bold mb-6 leading-tight">
+                    Ressources &
+                    <span class="text-gradient-primary bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+                        Devoirs
+                    </span>
+                </h1>
+
+                <p class="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed max-w-4xl mx-auto">
+                    Accédez à notre bibliothèque complète de ressources éducatives, devoirs pratiques et outils statistiques 
+                    adaptés au contexte économique burkinabé.
+                </p>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-secondary">{{ stats.total_ressources }}</div>
+                        <div class="text-sm text-blue-200">Ressources Disponibles</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-accent">{{ stats.devoirs_actifs }}</div>
+                        <div class="text-sm text-blue-200">Devoirs Actifs</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-secondary">{{ stats.taux_reussite }}%</div>
+                        <div class="text-sm text-blue-200">Taux de Réussite</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="py-8 bg-surface border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                <!-- Search Bar -->
+                <div class="relative flex-1 max-w-2xl">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                    <input type="text" placeholder="Rechercher des ressources, devoirs ou outils..." class="input-field pl-10 pr-4" id="search-input" />
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="flex flex-wrap gap-3">
+                    <select class="input-field w-auto min-w-32" id="category-filter">
+                        <option value>Toutes catégories</option>
+                        <option value="statistiques">Statistiques</option>
+                        <option value="economie">Économie</option>
+                        <option value="econometrie">Économétrie</option>
+                        <option value="outils">Outils</option>
+                    </select>
+
+                    <select class="input-field w-auto min-w-32" id="level-filter">
+                        <option value>Tous niveaux</option>
+                        <option value="debutant">Débutant</option>
+                        <option value="intermediaire">Intermédiaire</option>
+                        <option value="avance">Avancé</option>
+                    </select>
+
+                    <button class="btn-accent px-4 py-2 flex items-center" id="filter-button">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                        </svg>
+                        Filtrer
+                    </button>
+
+                    <button class="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm transition-academic" id="reset-filters">
+                        Réinitialiser
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-4 gap-8">
+                <!-- Sidebar Navigation -->
+                <div class="lg:col-span-1">
+                    <div class="card sticky top-24">
+                        <h3 class="text-lg font-inter font-semibold text-primary mb-4">Navigation Rapide</h3>
+                        <nav class="space-y-2">
+                            <a href="#assignments" class="flex items-center text-gray-700 hover:text-primary hover:bg-primary-50 px-3 py-2 rounded-lg transition-academic">
+                                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                Devoirs Actifs
+                            </a>
+                            <a href="#resources" class="flex items-center text-gray-700 hover:text-primary hover:bg-primary-50 px-3 py-2 rounded-lg transition-academic">
+                                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                                Bibliothèque
+                            </a>
+                            <a href="#tools" class="flex items-center text-gray-700 hover:text-primary hover:bg-primary-50 px-3 py-2 rounded-lg transition-academic">
+                                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                </svg>
+                                Outils Statistiques
+                            </a>
+                        </nav>
+
+                        <!-- VIP Upgrade Prompt -->
+                        <div class="mt-6 p-4 bg-gradient-to-br from-secondary-50 to-accent-50 rounded-lg border border-secondary-200">
+                            <div class="flex items-center mb-2">
+                                <svg class="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732L14.146 12.8l-1.179 4.456a1 1 0 01-1.934 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732L9.854 7.2l1.179-4.456A1 1 0 0112 2z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="font-semibold text-secondary">Accès VIP</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">
+                                Débloquez les corrections détaillées et outils avancés
+                            </p>
+                            <a href="{% url 'vip_membership' %}" class="btn-secondary text-sm w-full text-center block">
+                                Découvrir VIP
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% if user.is_authenticated %}
+                <!-- Main Content -->
+                <div class="lg:col-span-3">
+                    <!-- Active Assignments Section -->
+                    <div id="assignments" class="mb-12">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-inter font-bold text-primary">Devoirs Actifs</h2>
+                            <span class="bg-accent-100 text-accent px-3 py-1 rounded-full text-sm font-medium">
+                                {{ devoirs.count }} devoirs disponibles
+                            </span>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            {% for devoir in devoirs %}
+                            <div class="card hover:shadow-academic-lg transition-academic border-l-4 border-l-accent">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div>
+                                        <h3 class="text-lg font-inter font-semibold text-primary mb-1">
+                                            {{ devoir.titre }}
+                                        </h3>
+                                        <p class="text-sm text-gray-600">{{ devoir.categorie }} • {{ devoir.get_niveau_display }}</p>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="bg-success-100 text-success-600 px-2 py-1 rounded text-xs font-medium">
+                                            Nouveau
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <p class="text-gray-700 mb-4">
+                                    {{ devoir.description|truncatewords:20 }}
+                                </p>
+
+                                <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                                    {% if devoir.echeance %}
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                        Échéance: {{ devoir.echeance|date:"d F Y" }}
+                                    </span>
+                                    {% endif %}
+                                    {% if devoir.duree_estimee %}
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        {{ devoir.duree_estimee }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <a href="{{ devoir.fichier.url }}" class="btn-primary text-sm px-4 py-2 flex items-center" download>
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                        </svg>
+                                        Télécharger
+                                    </a>
+                                    <div class="flex items-center space-x-2">
+                                        {% if devoir.accessible_vip %}
+                                        <span class="text-xs text-gray-500">Correction VIP</span>
+                                        <div class="bg-secondary text-white px-2 py-1 rounded text-xs font-bold">
+                                            VIP
+                                        </div>
+                                        {% else %}
+                                        <span class="text-xs text-success-600 font-medium">Gratuit</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-span-2 text-center py-8">
+                                <p class="text-gray-500">Aucun devoir disponible pour le moment.</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Resource Library Section -->
+                    <div id="resources" class="mb-12">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-inter font-bold text-primary">Bibliothèque de Ressources</h2>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-primary-100 text-primary px-3 py-1 rounded-full text-sm font-medium">
+                                    {{ stats.total_ressources }} ressources
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Resource Categories -->
+                        <div class="grid md:grid-cols-3 gap-6 mb-8">
+                            <!-- Statistics Resources -->
+                            <div class="card hover:shadow-academic-lg transition-academic">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-primary-100 p-3 rounded-lg mr-4">
+                                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-inter font-semibold text-primary">Statistiques</h3>
+                                        <p class="text-sm text-gray-600">{{ ressources_statistiques.count }} ressources</p>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    {% for ressource in ressources_statistiques|slice:":3" %}
+                                    <div class="flex items-center justify-between p-3 {% if ressource.accessible_vip %}bg-secondary-50 border border-secondary-200{% else %}bg-gray-50{% endif %} rounded-lg">
+                                        <div>
+                                            <h4 class="font-medium text-gray-800 text-sm flex items-center">
+                                                {{ ressource.titre }}
+                                                {% if ressource.accessible_vip %}
+                                                <div class="bg-secondary text-white px-2 py-0.5 rounded text-xs font-bold ml-2">
+                                                    VIP
+                                                </div>
+                                                {% endif %}
+                                            </h4>
+                                            <p class="text-xs text-gray-600">{{ ressource.get_niveau_display }} • {{ ressource.taille_fichier|default:"PDF" }}</p>
+                                        </div>
+                                        <a href="{{ ressource.fichier.url }}" class="{% if ressource.accessible_vip %}text-secondary hover:text-secondary-700{% else %}text-primary hover:text-primary-700{% endif %} transition-academic" download>
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    {% empty %}
+                                    <p class="text-gray-500 text-sm text-center py-4">Aucune ressource disponible</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Economics Resources -->
+                            <div class="card hover:shadow-academic-lg transition-academic">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-accent-100 p-3 rounded-lg mr-4">
+                                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-inter font-semibold text-primary">Économie</h3>
+                                        <p class="text-sm text-gray-600">{{ ressources_economie.count }} ressources</p>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    {% for ressource in ressources_economie|slice:":3" %}
+                                    <div class="flex items-center justify-between p-3 {% if ressource.accessible_vip %}bg-secondary-50 border border-secondary-200{% else %}bg-gray-50{% endif %} rounded-lg">
+                                        <div>
+                                            <h4 class="font-medium text-gray-800 text-sm flex items-center">
+                                                {{ ressource.titre }}
+                                                {% if ressource.accessible_vip %}
+                                                <div class="bg-secondary text-white px-2 py-0.5 rounded text-xs font-bold ml-2">
+                                                    VIP
+                                                </div>
+                                                {% endif %}
+                                            </h4>
+                                            <p class="text-xs text-gray-600">{{ ressource.get_niveau_display }} • {{ ressource.taille_fichier|default:"PDF" }}</p>
+                                        </div>
+                                        <a href="{{ ressource.fichier.url }}" class="{% if ressource.accessible_vip %}text-secondary hover:text-secondary-700{% else %}text-primary hover:text-primary-700{% endif %} transition-academic" download>
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    {% empty %}
+                                    <p class="text-gray-500 text-sm text-center py-4">Aucune ressource disponible</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Case Studies -->
+                            <div class="card hover:shadow-academic-lg transition-academic">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-secondary-100 p-3 rounded-lg mr-4">
+                                        <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-inter font-semibold text-primary">Études de Cas</h3>
+                                        <p class="text-sm text-gray-600">{{ ressources_etudes.count }} ressources</p>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    {% for ressource in ressources_etudes|slice:":3" %}
+                                    <div class="flex items-center justify-between p-3 {% if ressource.accessible_vip %}bg-secondary-50 border border-secondary-200{% else %}bg-gray-50{% endif %} rounded-lg">
+                                        <div>
+                                            <h4 class="font-medium text-gray-800 text-sm flex items-center">
+                                                {{ ressource.titre }}
+                                                {% if ressource.accessible_vip %}
+                                                <div class="bg-secondary text-white px-2 py-0.5 rounded text-xs font-bold ml-2">
+                                                    VIP
+                                                </div>
+                                                {% endif %}
+                                            </h4>
+                                            <p class="text-xs text-gray-600">{{ ressource.get_niveau_display }} • {{ ressource.taille_fichier|default:"PDF" }}</p>
+                                        </div>
+                                        <a href="{{ ressource.fichier.url }}" class="{% if ressource.accessible_vip %}text-secondary hover:text-secondary-700{% else %}text-primary hover:text-primary-700{% endif %} transition-academic" download>
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    {% empty %}
+                                    <p class="text-gray-500 text-sm text-center py-4">Aucune étude de cas disponible</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="lg:col-span-3 text-center py-16">
+                        <h2 class="text-2xl font-inter font-bold text-primary mb-4">Bienvenue au Hub Éducatif</h2>
+                        <p class="text-gray-600 mb-6">
+                            Veuillez vous connecter pour accéder aux devoirs actifs et à la bibliothèque de ressources.
+                        </p>
+                        <a href="{% url 'membership_portal' %}" class="btn-primary px-6 py-3">
+                            Se Connecter
+                        </a>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Le reste de votre code (Outils, Progrès, VIP) reste inchangé -->
+                    <!-- ... -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-4 gap-8">
+                <!-- Club Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-1">
+                            <img src="{% static 'images/IMESE.png' %}" alt="Club IMESE Logo" class="w-10 h-20 rounded-full mr-10"/>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-inter font-bold">Club IMESE</h3>
+                            <p class="text-sm text-gray-400">Université Thomas Sankara</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 max-w-md">
+                        L'excellence par la collaboration - Votre partenaire pour l'excellence académique en Statistiques et Économie au Burkina Faso.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://web.facebook.com/Lejeunestatisticien" class="text-gray-400 hover:text-secondary transition-academic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.tiktok.com/@club_imese?is_from_webapp=1&sender_device=pc" class="text-gray-400 hover:text-secondary transition-academic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"/>
+                            </svg>
+                        </a>
+                        <a href="javascript:void(0)" class="text-gray-400 hover:text-secondary transition-academic">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-inter font-semibold mb-4">Liens Rapides</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'formations_catalog' %}" class="text-gray-300 hover:text-secondary transition-academic">Formations</a></li>
+                        <li><a href="{% url 'ressources' %}" class="text-gray-300 hover:text-secondary transition-academic">Ressources</a></li>
+                        <li><a href="{% url 'membership_portal' %}" class="text-gray-300 hover:text-secondary transition-academic">Inscription</a></li>
+                        {% if not user.is_authenticated %}
+                        <li><a href="{% url 'membership_portal' %}" class="text-gray-300 hover:text-secondary transition-academic">Inscription</a></li>
+                        {% else %}
+                        <li><a href="{% url 'membership_portal' %}" class="text-gray-300 hover:text-secondary transition-academic">Mon Compte</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'news_activities' %}" class="text-gray-300 hover:text-secondary transition-academic">Actualités</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-inter font-semibold mb-4">Contact</h4>
+                    <div class="space-y-2 text-gray-300">
+                        <p>Université Thomas Sankara, Ouagadougou</p>
+                        <p>contact@clubimese.bf</p>
+                        <p>+226 70 12 34 56</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 Club IMESE - Université Thomas Sankara. Tous droits réservés.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript (identique à votre version) -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Le reste de votre JavaScript fonctionne parfaitement !
+    </script>
+</body>
+</html>

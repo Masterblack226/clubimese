@@ -1,0 +1,25 @@
+{% load static %}
+<!-- Navigation Bar -->
+<nav class="bg-primary shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <a href="{% url 'homepage' %}" class="text-white font-bold text-xl">Club IMESE</a>
+            </div>
+            
+            <!-- Nav Links -->
+            <div class="flex space-x-6">
+                <a href="{% url 'homepage' %}" class="text-white hover:text-gray-200 transition">Accueil</a>
+                <a href="{% url 'news_activities' %}" class="text-white hover:text-gray-200 transition">Actualités</a>
+                <a href="{% url 'formations_catalog' %}" class="text-white hover:text-gray-200 transition">Formations</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'membership_portal' %}" class="text-white hover:text-gray-200 transition">Espace Membre</a>
+                    <a href="{% url 'deconnexion' %}" class="text-white hover:text-gray-200 transition">Déconnexion</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-white hover:text-gray-200 transition">Connexion</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
